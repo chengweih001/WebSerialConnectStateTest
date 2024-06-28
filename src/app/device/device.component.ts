@@ -18,7 +18,7 @@ export class DeviceComponent implements OnInit {
   async ngOnInit() { // Use ngOnInit lifecycle hook
     try {
       this.deviceInfo = await this.device.getInfo();
-      this.hasConnectFeature = typeof this.device.connect !== 'undefined';
+      this.hasConnectFeature = typeof this.device.connected !== 'undefined';
 
       if (this.hasConnectFeature) {
         this.device.onconnect = this.onConnect;
