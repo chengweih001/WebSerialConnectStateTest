@@ -11,19 +11,19 @@ import { GrantedDeviceListComponent } from './granted-device-list/granted-device
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  @Output() refreshDevices = new EventEmitter();  
+  @Output() refreshDevices = new EventEmitter();
   title = 'WebSerialConnectStateTest';
 
-  refreshTrigger = false;  
+  refreshTrigger = false;
 
   onDevicePermissionGranted() {
     this.refreshTrigger = true; // Trigger the refresh
     // Emit the refreshDevices event to signal the child component
-    this.refreshDevices.emit(); 
+    this.refreshDevices.emit();
   }
 
   onDeviceListRefreshed() {
     this.refreshTrigger = false; // Reset the trigger
   }
-  
+
 }
