@@ -22,7 +22,7 @@ export class DeviceComponent implements OnInit {
 
       if (this.hasConnectFeature) {
         this.device.onconnect = this.onConnect.bind(this);
-        this.device.onconnect = this.onDisconnect.bind(this);
+        this.device.ondisconnect = this.onDisconnect.bind(this);
         this.isConnected = this.device.connected;
       }      
     } catch (error) {
