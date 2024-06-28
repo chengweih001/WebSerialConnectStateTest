@@ -33876,26 +33876,79 @@ function DeviceComponent_div_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1("Bluetooth Service Class ID: ", ctx_r0.deviceInfo == null ? null : ctx_r0.deviceInfo.bluetoothServiceClassId, "");
   }
 }
+function DeviceComponent_div_5_p_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "connected: true");
+    \u0275\u0275elementEnd();
+  }
+}
+function DeviceComponent_div_5_p_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "p");
+    \u0275\u0275text(1, "connected: false");
+    \u0275\u0275elementEnd();
+  }
+}
+function DeviceComponent_div_5_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div");
+    \u0275\u0275template(1, DeviceComponent_div_5_p_1_Template, 2, 0, "p", 0)(2, DeviceComponent_div_5_p_2_Template, 2, 0, "p", 0);
+    \u0275\u0275elementEnd();
+  }
+  if (rf & 2) {
+    const ctx_r0 = \u0275\u0275nextContext();
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx_r0.isConnected);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx_r0.isConnected);
+  }
+}
+function DeviceComponent_div_6_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "div")(1, "p");
+    \u0275\u0275text(2, "Please enable feature SerialPortConnected");
+    \u0275\u0275elementEnd()();
+  }
+}
 var _DeviceComponent = class _DeviceComponent {
+  constructor() {
+    this.isConnected = false;
+    this.hasConnectFeature = false;
+  }
   ngOnInit() {
     return __async(this, null, function* () {
       try {
         this.deviceInfo = yield this.device.getInfo();
+        this.hasConnectFeature = typeof this.device.connect !== "undefined";
+        if (this.hasConnectFeature) {
+          this.device.onconnect = this.onConnect;
+          this.device.onconnect = this.onDisconnect;
+          this.isConnected = this.device.connected;
+        }
       } catch (error) {
         console.error("Error getting device info:", error);
       }
     });
   }
+  onConnect() {
+    console.log("[DEBUG] device connect");
+    this.isConnected = this.device.connected;
+  }
+  onDisconnect() {
+    console.log("[DEBUG] device disconnect");
+    this.isConnected = this.device.connected;
+  }
 };
 _DeviceComponent.\u0275fac = function DeviceComponent_Factory(t) {
   return new (t || _DeviceComponent)();
 };
-_DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DeviceComponent, selectors: [["app-device"]], inputs: { device: "device" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 5, vars: 3, consts: [[4, "ngIf"]], template: function DeviceComponent_Template(rf, ctx) {
+_DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DeviceComponent, selectors: [["app-device"]], inputs: { device: "device" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 5, consts: [[4, "ngIf"]], template: function DeviceComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "h2");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(3, DeviceComponent_div_3_Template, 5, 2, "div", 0)(4, DeviceComponent_div_4_Template, 3, 1, "div", 0);
+    \u0275\u0275template(3, DeviceComponent_div_3_Template, 5, 2, "div", 0)(4, DeviceComponent_div_4_Template, 3, 1, "div", 0)(5, DeviceComponent_div_5_Template, 3, 2, "div", 0)(6, DeviceComponent_div_6_Template, 3, 0, "div", 0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -33905,6 +33958,10 @@ _DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type:
     \u0275\u0275property("ngIf", (ctx.deviceInfo == null ? null : ctx.deviceInfo.usbVendorId) && (ctx.deviceInfo == null ? null : ctx.deviceInfo.usbProductId));
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", ctx.deviceInfo == null ? null : ctx.deviceInfo.bluetoothServiceClassId);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", ctx.hasConnectFeature);
+    \u0275\u0275advance();
+    \u0275\u0275property("ngIf", !ctx.hasConnectFeature);
   }
 }, dependencies: [NgIf, CommonModule] });
 var DeviceComponent = _DeviceComponent;
@@ -34027,4 +34084,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-DI3NDFBT.js.map
+//# sourceMappingURL=main-JSCGEXZY.js.map
