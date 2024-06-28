@@ -21,8 +21,8 @@ export class DeviceComponent implements OnInit {
       this.hasConnectFeature = typeof this.device.connected !== 'undefined';
 
       if (this.hasConnectFeature) {
-        this.device.onconnect = this.onConnect;
-        this.device.onconnect = this.onDisconnect;
+        this.device.onconnect = this.onConnect.bind(this);
+        this.device.onconnect = this.onDisconnect.bind(this);
         this.isConnected = this.device.connected;
       }      
     } catch (error) {
