@@ -33920,7 +33920,7 @@ var _DeviceComponent = class _DeviceComponent {
     return __async(this, null, function* () {
       try {
         this.deviceInfo = yield this.device.getInfo();
-        this.hasConnectFeature = typeof this.device.connect !== "undefined";
+        this.hasConnectFeature = typeof this.device.connected !== "undefined";
         if (this.hasConnectFeature) {
           this.device.onconnect = this.onConnect;
           this.device.onconnect = this.onDisconnect;
@@ -34084,4 +34084,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-JSCGEXZY.js.map
+//# sourceMappingURL=main-FMTOQDZZ.js.map
