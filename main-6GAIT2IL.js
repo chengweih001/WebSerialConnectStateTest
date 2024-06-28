@@ -33923,7 +33923,7 @@ var _DeviceComponent = class _DeviceComponent {
         this.hasConnectFeature = typeof this.device.connected !== "undefined";
         if (this.hasConnectFeature) {
           this.device.onconnect = this.onConnect.bind(this);
-          this.device.onconnect = this.onDisconnect.bind(this);
+          this.device.ondisconnect = this.onDisconnect.bind(this);
           this.isConnected = this.device.connected;
         }
       } catch (error) {
@@ -34084,4 +34084,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-B4FRLVWS.js.map
+//# sourceMappingURL=main-6GAIT2IL.js.map
