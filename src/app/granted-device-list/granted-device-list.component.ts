@@ -49,7 +49,6 @@ export class GrantedDeviceListComponent implements OnInit, OnChanges {
   }
 
   async RefreshDeviceList() {
-    console.log('test');
     this.devices = await this.getGrantedDevices();
     this.DeviceListRefreshed.emit();
   }  

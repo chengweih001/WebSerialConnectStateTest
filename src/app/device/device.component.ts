@@ -15,7 +15,6 @@ export class DeviceComponent implements OnInit {
   async ngOnInit() { // Use ngOnInit lifecycle hook
     try {
       this.deviceInfo = await this.device.getInfo();
-      console.log(this.deviceInfo);
     } catch (error) {
       console.error('Error getting device info:', error);
     }
