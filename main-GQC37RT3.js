@@ -33881,7 +33881,6 @@ var _DeviceComponent = class _DeviceComponent {
     return __async(this, null, function* () {
       try {
         this.deviceInfo = yield this.device.getInfo();
-        console.log(this.deviceInfo);
       } catch (error) {
         console.error("Error getting device info:", error);
       }
@@ -33964,7 +33963,6 @@ var _GrantedDeviceListComponent = class _GrantedDeviceListComponent {
   }
   RefreshDeviceList() {
     return __async(this, null, function* () {
-      console.log("test");
       this.devices = yield this.getGrantedDevices();
       this.DeviceListRefreshed.emit();
     });
@@ -34029,4 +34027,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-CHB7HLZF.js.map
+//# sourceMappingURL=main-GQC37RT3.js.map
