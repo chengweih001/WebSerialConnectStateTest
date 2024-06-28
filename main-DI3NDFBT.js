@@ -33915,8 +33915,8 @@ var DeviceComponent = _DeviceComponent;
 // src/app/granted-device-list/granted-device-list.component.ts
 function GrantedDeviceListComponent_div_0_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div");
-    \u0275\u0275element(1, "app-device", 1);
+    \u0275\u0275elementStart(0, "div", 1);
+    \u0275\u0275element(1, "app-device", 2);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -33971,14 +33971,14 @@ var _GrantedDeviceListComponent = class _GrantedDeviceListComponent {
 _GrantedDeviceListComponent.\u0275fac = function GrantedDeviceListComponent_Factory(t) {
   return new (t || _GrantedDeviceListComponent)();
 };
-_GrantedDeviceListComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _GrantedDeviceListComponent, selectors: [["app-granted-device-list"]], inputs: { refreshTrigger: "refreshTrigger" }, outputs: { DeviceListRefreshed: "DeviceListRefreshed" }, standalone: true, features: [\u0275\u0275NgOnChangesFeature, \u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [[4, "ngFor", "ngForOf"], [3, "device"]], template: function GrantedDeviceListComponent_Template(rf, ctx) {
+_GrantedDeviceListComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _GrantedDeviceListComponent, selectors: [["app-granted-device-list"]], inputs: { refreshTrigger: "refreshTrigger" }, outputs: { DeviceListRefreshed: "DeviceListRefreshed" }, standalone: true, features: [\u0275\u0275NgOnChangesFeature, \u0275\u0275StandaloneFeature], decls: 1, vars: 1, consts: [["class", "device-list-item", 4, "ngFor", "ngForOf"], [1, "device-list-item"], [3, "device"]], template: function GrantedDeviceListComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275template(0, GrantedDeviceListComponent_div_0_Template, 2, 1, "div", 0);
   }
   if (rf & 2) {
     \u0275\u0275property("ngForOf", ctx.devices);
   }
-}, dependencies: [CommonModule, NgForOf, DeviceComponent] });
+}, dependencies: [CommonModule, NgForOf, DeviceComponent], styles: ["\n\n.device-list-item[_ngcontent-%COMP%] {\n  border: 2px solid black;\n}\n/*# sourceMappingURL=granted-device-list.component-GLN5N7IZ.css.map */"] });
 var GrantedDeviceListComponent = _GrantedDeviceListComponent;
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GrantedDeviceListComponent, { className: "GrantedDeviceListComponent", filePath: "src/app/granted-device-list/granted-device-list.component.ts", lineNumber: 13 });
@@ -34027,4 +34027,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-GQC37RT3.js.map
+//# sourceMappingURL=main-DI3NDFBT.js.map

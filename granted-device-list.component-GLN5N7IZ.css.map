@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/granted-device-list/granted-device-list.component.css"],
+  "sourcesContent": [".device-list-item {\n  border: 2px solid black;\n}"],
+  "mappings": ";AAAA,CAAC;AACC,UAAQ,IAAI,MAAM;AACpB;",
+  "names": []
+}
