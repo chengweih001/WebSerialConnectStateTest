@@ -7,4 +7,12 @@
     <div *ngIf="deviceInfo?.bluetoothServiceClassId">
         <p>Bluetooth Service Class ID: {{ deviceInfo?.bluetoothServiceClassId }}</p>
     </div>
+    <div *ngIf="hasConnectFeature">
+        <p *ngIf="isConnected">connected: true</p>
+        <p *ngIf="!isConnected">connected: false</p>
+      </div>
+    
+      <div *ngIf="!hasConnectFeature">
+        <p>Please enable feature SerialPortConnected</p>
+      </div>    
 </div>
