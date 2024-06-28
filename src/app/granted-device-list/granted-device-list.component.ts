@@ -1,7 +1,6 @@
 // /home/chengweih/repo/WebSerialConnectStateTest/src/app/granted-device-list/granted-device-list.component.ts
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, OnInit, OnChanges } from '@angular/core';
 import { DeviceComponent } from '../device/device.component';
-import { Observable, from } from 'rxjs';
 import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
@@ -11,9 +10,9 @@ import { CommonModule, NgFor } from '@angular/common';
   templateUrl: './granted-device-list.component.html',
   styleUrl: './granted-device-list.component.css'
 })
-export class GrantedDeviceListComponent {
+export class GrantedDeviceListComponent implements OnInit, OnChanges {
   @Output() DeviceListRefreshed = new EventEmitter();
-  @Input() refreshTrigger: boolean = false; // Input to trigger refresh  
+  @Input() refreshTrigger = false; // Input to trigger refresh  
   devices: any[] = []; // Array to store the devices
 
   isUsbSerialDevice(info: any): boolean {
@@ -44,7 +43,7 @@ export class GrantedDeviceListComponent {
   }  
 
   async getGrantedDevices(): Promise<any[]> {
-    let devices =  await (navigator as any).serial.getPorts();
+    const devices =  await (navigator as any).serial.getPorts();
     return devices.filter((device: any) => this.shouldShowDevices(device));
 
   }

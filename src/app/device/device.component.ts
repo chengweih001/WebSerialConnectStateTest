@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
@@ -8,7 +8,7 @@ import { CommonModule, NgIf } from '@angular/common';
   templateUrl: './device.component.html',
   styleUrl: './device.component.css'
 })
-export class DeviceComponent {
+export class DeviceComponent implements OnInit {
   @Input() device: any; // Assuming 'device' is an object with a 'name' property
   deviceInfo: any; // To store the info from getInfo()  
 
