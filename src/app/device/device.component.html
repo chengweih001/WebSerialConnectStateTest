@@ -1,18 +1,17 @@
 <div>
-    <h2>Device Name: {{ device.name }}</h2>
-    <div *ngIf="deviceInfo?.usbVendorId && deviceInfo?.usbProductId">
-        <p>Vendor ID: {{ deviceInfo?.usbVendorId }}</p>
-        <p>Product ID: {{ deviceInfo?.usbProductId }}</p>
-    </div>
-    <div *ngIf="deviceInfo?.bluetoothServiceClassId">
-        <p>Bluetooth Service Class ID: {{ deviceInfo?.bluetoothServiceClassId }}</p>
-    </div>
-    <div *ngIf="hasConnectFeature">
-        <p *ngIf="isConnected">connected: true</p>
-        <p *ngIf="!isConnected">connected: false</p>
-      </div>
-    
-      <div *ngIf="!hasConnectFeature">
-        <p>Please enable feature SerialPortConnected</p>
-      </div>    
+  <h2>Device Name: {{ device.name }}</h2>
+  <div *ngIf="deviceInfo?.usbVendorId && deviceInfo?.usbProductId">
+    <p>Vendor ID: {{ deviceInfo?.usbVendorId }}</p>
+    <p>Product ID: {{ deviceInfo?.usbProductId }}</p>
+  </div>
+  <div *ngIf="deviceInfo?.bluetoothServiceClassId">
+    <p>Bluetooth Service Class ID: {{ deviceInfo?.bluetoothServiceClassId }}</p>
+  </div>
+  <div *ngIf="hasConnectFeature">
+    <p [textContent]="'connected: ' + isConnected"> </p>
+  </div>
+
+  <div *ngIf="!hasConnectFeature">
+    <p>Please enable feature SerialPortConnected</p>
+  </div>
 </div>
