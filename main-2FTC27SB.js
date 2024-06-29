@@ -33847,7 +33847,7 @@ var GrantDevicePermissionComponent = _GrantDevicePermissionComponent;
 })();
 
 // src/app/device/device.component.ts
-function DeviceComponent_div_3_Template(rf, ctx) {
+function DeviceComponent_div_1_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "p");
     \u0275\u0275text(2);
@@ -33864,7 +33864,7 @@ function DeviceComponent_div_3_Template(rf, ctx) {
     \u0275\u0275textInterpolate1("Product ID: ", ctx_r0.deviceInfo == null ? null : ctx_r0.deviceInfo.usbProductId, "");
   }
 }
-function DeviceComponent_div_4_Template(rf, ctx) {
+function DeviceComponent_div_2_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "p");
     \u0275\u0275text(2);
@@ -33876,7 +33876,7 @@ function DeviceComponent_div_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1("Bluetooth Service Class ID: ", ctx_r0.deviceInfo == null ? null : ctx_r0.deviceInfo.bluetoothServiceClassId, "");
   }
 }
-function DeviceComponent_div_5_Template(rf, ctx) {
+function DeviceComponent_div_3_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div");
     \u0275\u0275element(1, "p", 1);
@@ -33888,7 +33888,7 @@ function DeviceComponent_div_5_Template(rf, ctx) {
     \u0275\u0275property("textContent", "connected: " + ctx_r0.isConnected);
   }
 }
-function DeviceComponent_div_6_Template(rf, ctx) {
+function DeviceComponent_div_4_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "p");
     \u0275\u0275text(2, "Please enable feature SerialPortConnected");
@@ -33900,14 +33900,6 @@ var _DeviceComponent = class _DeviceComponent {
     this.cdRef = cdRef;
     this.isConnected = false;
     this.hasConnectFeature = false;
-    this.onConnect = () => {
-      console.log("[DEBUG] device connect");
-      this.updateConnectState();
-    };
-    this.onDisconnect = () => {
-      console.log("[DEBUG] device disconnect");
-      this.updateConnectState();
-    };
   }
   ngOnInit() {
     return __async(this, null, function* () {
@@ -33915,8 +33907,8 @@ var _DeviceComponent = class _DeviceComponent {
         this.deviceInfo = yield this.device.getInfo();
         this.hasConnectFeature = typeof this.device.connected !== "undefined";
         if (this.hasConnectFeature) {
-          this.device.onconnect = this.onConnect;
-          this.device.ondisconnect = this.onDisconnect;
+          this.device.onconnect = this.onConnect.bind(this);
+          this.device.ondisconnect = this.onDisconnect.bind(this);
           this.isConnected = this.device.connected;
         }
       } catch (error) {
@@ -33924,25 +33916,53 @@ var _DeviceComponent = class _DeviceComponent {
       }
     });
   }
+  static isUsbSerialDevice(info) {
+    return info.usbProductId !== void 0 && info.usbVendorId !== void 0;
+  }
+  static isBluetoothDevice(info) {
+    const allowed_uuids = [
+      "25e97ff7-24ce-4c4c-8951-f764a708f7b5"
+      // Pixel Bud Pro
+    ];
+    return info.bluetoothServiceClassId !== void 0 && allowed_uuids.includes(info.bluetoothServiceClassId);
+  }
+  deviceName() {
+    const info = this.device.getInfo();
+    if (_DeviceComponent.isUsbSerialDevice(info)) {
+      return `VendorId(${info.usbVendorId}:ProductId${info.usbProductId})`;
+    } else if (_DeviceComponent.isBluetoothDevice(info)) {
+      return `BluetoothServiceClassId(${info.bluetoothServiceClassId})`;
+    } else {
+      return "Unknown Device";
+    }
+  }
+  static shouldShowDevices(device) {
+    const info = device.getInfo();
+    return this.isUsbSerialDevice(info) || this.isBluetoothDevice(info);
+  }
   updateConnectState() {
     this.isConnected = this.device.connected;
     this.cdRef.detectChanges();
+  }
+  onConnect() {
+    console.log(`[DEBUG] device(${this.deviceName()}) connect`);
+    this.updateConnectState();
+  }
+  onDisconnect() {
+    console.log(`[DEBUG] device(${this.deviceName()}) disconnect`);
+    this.updateConnectState();
   }
 };
 _DeviceComponent.\u0275fac = function DeviceComponent_Factory(t) {
   return new (t || _DeviceComponent)(\u0275\u0275directiveInject(ChangeDetectorRef));
 };
-_DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DeviceComponent, selectors: [["app-device"]], inputs: { device: "device" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 5, consts: [[4, "ngIf"], [3, "textContent"]], template: function DeviceComponent_Template(rf, ctx) {
+_DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DeviceComponent, selectors: [["app-device"]], inputs: { device: "device" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 5, vars: 4, consts: [[4, "ngIf"], [3, "textContent"]], template: function DeviceComponent_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "div")(1, "h2");
-    \u0275\u0275text(2);
-    \u0275\u0275elementEnd();
-    \u0275\u0275template(3, DeviceComponent_div_3_Template, 5, 2, "div", 0)(4, DeviceComponent_div_4_Template, 3, 1, "div", 0)(5, DeviceComponent_div_5_Template, 2, 1, "div", 0)(6, DeviceComponent_div_6_Template, 3, 0, "div", 0);
+    \u0275\u0275elementStart(0, "div");
+    \u0275\u0275template(1, DeviceComponent_div_1_Template, 5, 2, "div", 0)(2, DeviceComponent_div_2_Template, 3, 1, "div", 0)(3, DeviceComponent_div_3_Template, 2, 1, "div", 0)(4, DeviceComponent_div_4_Template, 3, 0, "div", 0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
-    \u0275\u0275advance(2);
-    \u0275\u0275textInterpolate1("Device Name: ", ctx.device.name, "");
     \u0275\u0275advance();
     \u0275\u0275property("ngIf", (ctx.deviceInfo == null ? null : ctx.deviceInfo.usbVendorId) && (ctx.deviceInfo == null ? null : ctx.deviceInfo.usbProductId));
     \u0275\u0275advance();
@@ -33977,20 +33997,6 @@ var _GrantedDeviceListComponent = class _GrantedDeviceListComponent {
     this.refreshTrigger = false;
     this.devices = [];
   }
-  isUsbSerialDevice(info) {
-    return info.usbProductId !== void 0 && info.usbVendorId !== void 0;
-  }
-  isBluetoothDevice(info) {
-    const allowed_uuids = [
-      "25e97ff7-24ce-4c4c-8951-f764a708f7b5"
-      // Pixel Bud Pro
-    ];
-    return info.bluetoothServiceClassId !== void 0 && allowed_uuids.includes(info.bluetoothServiceClassId);
-  }
-  shouldShowDevices(device) {
-    const info = device.getInfo();
-    return this.isUsbSerialDevice(info) || this.isBluetoothDevice(info);
-  }
   ngOnInit() {
     return __async(this, null, function* () {
       this.RefreshDeviceList();
@@ -34004,7 +34010,7 @@ var _GrantedDeviceListComponent = class _GrantedDeviceListComponent {
   getGrantedDevices() {
     return __async(this, null, function* () {
       const devices = yield navigator.serial.getPorts();
-      return devices.filter((device) => this.shouldShowDevices(device));
+      return devices.filter((device) => DeviceComponent.shouldShowDevices(device));
     });
   }
   RefreshDeviceList() {
@@ -34073,4 +34079,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-PUSOIRNO.js.map
+//# sourceMappingURL=main-2FTC27SB.js.map
