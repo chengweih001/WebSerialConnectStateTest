@@ -17,20 +17,48 @@ export class DeviceComponent implements OnInit {
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
-
   async ngOnInit() {  // Use ngOnInit lifecycle hook
     try {
       this.deviceInfo = await this.device.getInfo();
       this.hasConnectFeature = typeof this.device.connected !== 'undefined';
 
       if (this.hasConnectFeature) {
-        this.device.onconnect = this.onConnect;
-        this.device.ondisconnect = this.onDisconnect;
+        this.device.onconnect = this.onConnect.bind(this);
+        this.device.ondisconnect = this.onDisconnect.bind(this);
         this.isConnected = this.device.connected;
       }
     } catch (error) {
       console.error('Error getting device info:', error);
     }
+  }
+
+  isUsbSerialDevice(info: any): boolean {
+    return info.usbProductId !== undefined && info.usbVendorId !== undefined;
+  }
+
+  isBluetoothDevice(info: any): boolean {
+    // For testing purpose
+    const allowed_uuids = [
+      '25e97ff7-24ce-4c4c-8951-f764a708f7b5',  // Pixel Bud Pro
+    ];
+    return info.bluetoothServiceClassId !== undefined &&
+        allowed_uuids.includes(info.bluetoothServiceClassId);
+  }
+
+  deviceName() {
+    const info = this.device.getInfo();
+    if (this.isUsbSerialDevice(info)) {
+      return `VendorId(${info.usbVendorId}:ProductId${info.usbProductId})`;
+    } else if (this.isBluetoothDevice(info)) {
+      return `BluetoothServiceClassId(${info.bluetoothServiceClassId})`;
+    } else {
+      return 'Unknown Device';
+    }
+  }
+
+  shouldShowDevices(device: any): boolean {
+    const info = device.getInfo();
+    return this.isUsbSerialDevice(info) || this.isBluetoothDevice(info);
   }
 
   updateConnectState() {
@@ -40,14 +68,13 @@ export class DeviceComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
-  onConnect =
-      () => {
-        console.log('[DEBUG] device connect');
-        this.updateConnectState();
-      }
+  onConnect() {
+    console.log(`[DEBUG] device(${this.deviceName()}) connect`);
+    this.updateConnectState();
+  }
 
-  onDisconnect = () => {
-    console.log('[DEBUG] device disconnect');
+  onDisconnect() {
+    console.log(`[DEBUG] device(${this.deviceName()}) disconnect`);
     this.updateConnectState();
   }
 }
