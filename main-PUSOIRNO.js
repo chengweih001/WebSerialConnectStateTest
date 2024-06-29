@@ -33843,7 +33843,7 @@ _GrantDevicePermissionComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineCo
 } });
 var GrantDevicePermissionComponent = _GrantDevicePermissionComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GrantDevicePermissionComponent, { className: "GrantDevicePermissionComponent", filePath: "src/app/grant-device-permission/grant-device-permission.component.ts", lineNumber: 10 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GrantDevicePermissionComponent, { className: "GrantDevicePermissionComponent" });
 })();
 
 // src/app/device/device.component.ts
@@ -33876,32 +33876,16 @@ function DeviceComponent_div_4_Template(rf, ctx) {
     \u0275\u0275textInterpolate1("Bluetooth Service Class ID: ", ctx_r0.deviceInfo == null ? null : ctx_r0.deviceInfo.bluetoothServiceClassId, "");
   }
 }
-function DeviceComponent_div_5_p_1_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "p");
-    \u0275\u0275text(1, "connected: true");
-    \u0275\u0275elementEnd();
-  }
-}
-function DeviceComponent_div_5_p_2_Template(rf, ctx) {
-  if (rf & 1) {
-    \u0275\u0275elementStart(0, "p");
-    \u0275\u0275text(1, "connected: false");
-    \u0275\u0275elementEnd();
-  }
-}
 function DeviceComponent_div_5_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div");
-    \u0275\u0275template(1, DeviceComponent_div_5_p_1_Template, 2, 0, "p", 0)(2, DeviceComponent_div_5_p_2_Template, 2, 0, "p", 0);
+    \u0275\u0275element(1, "p", 1);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     const ctx_r0 = \u0275\u0275nextContext();
     \u0275\u0275advance();
-    \u0275\u0275property("ngIf", ctx_r0.isConnected);
-    \u0275\u0275advance();
-    \u0275\u0275property("ngIf", !ctx_r0.isConnected);
+    \u0275\u0275property("textContent", "connected: " + ctx_r0.isConnected);
   }
 }
 function DeviceComponent_div_6_Template(rf, ctx) {
@@ -33912,9 +33896,18 @@ function DeviceComponent_div_6_Template(rf, ctx) {
   }
 }
 var _DeviceComponent = class _DeviceComponent {
-  constructor() {
+  constructor(cdRef) {
+    this.cdRef = cdRef;
     this.isConnected = false;
     this.hasConnectFeature = false;
+    this.onConnect = () => {
+      console.log("[DEBUG] device connect");
+      this.updateConnectState();
+    };
+    this.onDisconnect = () => {
+      console.log("[DEBUG] device disconnect");
+      this.updateConnectState();
+    };
   }
   ngOnInit() {
     return __async(this, null, function* () {
@@ -33922,8 +33915,8 @@ var _DeviceComponent = class _DeviceComponent {
         this.deviceInfo = yield this.device.getInfo();
         this.hasConnectFeature = typeof this.device.connected !== "undefined";
         if (this.hasConnectFeature) {
-          this.device.onconnect = this.onConnect.bind(this);
-          this.device.ondisconnect = this.onDisconnect.bind(this);
+          this.device.onconnect = this.onConnect;
+          this.device.ondisconnect = this.onDisconnect;
           this.isConnected = this.device.connected;
         }
       } catch (error) {
@@ -33931,24 +33924,20 @@ var _DeviceComponent = class _DeviceComponent {
       }
     });
   }
-  onConnect() {
-    console.log("[DEBUG] device connect");
+  updateConnectState() {
     this.isConnected = this.device.connected;
-  }
-  onDisconnect() {
-    console.log("[DEBUG] device disconnect");
-    this.isConnected = this.device.connected;
+    this.cdRef.detectChanges();
   }
 };
 _DeviceComponent.\u0275fac = function DeviceComponent_Factory(t) {
-  return new (t || _DeviceComponent)();
+  return new (t || _DeviceComponent)(\u0275\u0275directiveInject(ChangeDetectorRef));
 };
-_DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DeviceComponent, selectors: [["app-device"]], inputs: { device: "device" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 5, consts: [[4, "ngIf"]], template: function DeviceComponent_Template(rf, ctx) {
+_DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _DeviceComponent, selectors: [["app-device"]], inputs: { device: "device" }, standalone: true, features: [\u0275\u0275StandaloneFeature], decls: 7, vars: 5, consts: [[4, "ngIf"], [3, "textContent"]], template: function DeviceComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "h2");
     \u0275\u0275text(2);
     \u0275\u0275elementEnd();
-    \u0275\u0275template(3, DeviceComponent_div_3_Template, 5, 2, "div", 0)(4, DeviceComponent_div_4_Template, 3, 1, "div", 0)(5, DeviceComponent_div_5_Template, 3, 2, "div", 0)(6, DeviceComponent_div_6_Template, 3, 0, "div", 0);
+    \u0275\u0275template(3, DeviceComponent_div_3_Template, 5, 2, "div", 0)(4, DeviceComponent_div_4_Template, 3, 1, "div", 0)(5, DeviceComponent_div_5_Template, 2, 1, "div", 0)(6, DeviceComponent_div_6_Template, 3, 0, "div", 0);
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
@@ -33966,7 +33955,7 @@ _DeviceComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type:
 }, dependencies: [NgIf, CommonModule] });
 var DeviceComponent = _DeviceComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DeviceComponent, { className: "DeviceComponent", filePath: "src/app/device/device.component.ts", lineNumber: 11 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(DeviceComponent, { className: "DeviceComponent" });
 })();
 
 // src/app/granted-device-list/granted-device-list.component.ts
@@ -34038,7 +34027,7 @@ _GrantedDeviceListComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineCompon
 }, dependencies: [CommonModule, NgForOf, DeviceComponent], styles: ["\n\n.device-list-item[_ngcontent-%COMP%] {\n  border: 2px solid black;\n}\n/*# sourceMappingURL=granted-device-list.component-GLN5N7IZ.css.map */"] });
 var GrantedDeviceListComponent = _GrantedDeviceListComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GrantedDeviceListComponent, { className: "GrantedDeviceListComponent", filePath: "src/app/granted-device-list/granted-device-list.component.ts", lineNumber: 13 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(GrantedDeviceListComponent, { className: "GrantedDeviceListComponent" });
 })();
 
 // src/app/app.component.ts
@@ -34079,9 +34068,9 @@ _AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _A
 }, dependencies: [GrantDevicePermissionComponent, GrantedDeviceListComponent] });
 var AppComponent = _AppComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent", filePath: "src/app/app.component.ts", lineNumber: 13 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(AppComponent, { className: "AppComponent" });
 })();
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-6GAIT2IL.js.map
+//# sourceMappingURL=main-PUSOIRNO.js.map
