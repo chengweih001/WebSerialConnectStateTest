@@ -32,11 +32,11 @@ export class DeviceComponent implements OnInit {
     }
   }
 
-  isUsbSerialDevice(info: any): boolean {
+  static isUsbSerialDevice(info: any): boolean {
     return info.usbProductId !== undefined && info.usbVendorId !== undefined;
   }
 
-  isBluetoothDevice(info: any): boolean {
+  static isBluetoothDevice(info: any): boolean {
     // For testing purpose
     const allowed_uuids = [
       '25e97ff7-24ce-4c4c-8951-f764a708f7b5',  // Pixel Bud Pro
@@ -47,16 +47,16 @@ export class DeviceComponent implements OnInit {
 
   deviceName() {
     const info = this.device.getInfo();
-    if (this.isUsbSerialDevice(info)) {
+    if (DeviceComponent.isUsbSerialDevice(info)) {
       return `VendorId(${info.usbVendorId}:ProductId${info.usbProductId})`;
-    } else if (this.isBluetoothDevice(info)) {
+    } else if (DeviceComponent.isBluetoothDevice(info)) {
       return `BluetoothServiceClassId(${info.bluetoothServiceClassId})`;
     } else {
       return 'Unknown Device';
     }
   }
 
-  shouldShowDevices(device: any): boolean {
+  static shouldShowDevices(device: any): boolean {
     const info = device.getInfo();
     return this.isUsbSerialDevice(info) || this.isBluetoothDevice(info);
   }
