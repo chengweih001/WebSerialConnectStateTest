@@ -33907,7 +33907,12 @@ var _DeviceComponent = class _DeviceComponent {
         this.deviceInfo = yield this.device.getInfo();
         this.hasConnectFeature = typeof this.device.connected !== "undefined";
         if (this.hasConnectFeature) {
-          this.device.onconnect = this.onConnect.bind(this);
+          if (_DeviceComponent.isBluetoothDevice(this.deviceInfo)) {
+            this.device.onconnect = this.onConnect.bind(this);
+          }
+          if (_DeviceComponent.isUsbSerialDevice(this.deviceInfo)) {
+            navigator.serial.addEventListener("connect", this.onConnectUsbSerialDevice.bind(this));
+          }
           this.device.ondisconnect = this.onDisconnect.bind(this);
           this.isConnected = this.device.connected;
         }
@@ -33945,6 +33950,17 @@ var _DeviceComponent = class _DeviceComponent {
     this.cdRef.detectChanges();
   }
   onConnect() {
+    console.log(`[DEBUG] device(${this.deviceName()}) connect`);
+    this.updateConnectState();
+  }
+  onConnectUsbSerialDevice(e) {
+    let port = e.target;
+    let port_info = port.getInfo();
+    if (JSON.stringify(port_info) != JSON.stringify(this.deviceInfo)) {
+      return;
+    }
+    this.device = port;
+    this.device.ondisconnect = this.onDisconnect.bind(this);
     console.log(`[DEBUG] device(${this.deviceName()}) connect`);
     this.updateConnectState();
   }
@@ -34079,4 +34095,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-2FTC27SB.js.map
+//# sourceMappingURL=main-HSPONON7.js.map
