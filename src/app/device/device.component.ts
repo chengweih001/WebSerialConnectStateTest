@@ -23,7 +23,12 @@ export class DeviceComponent implements OnInit {
       this.hasConnectFeature = typeof this.device.connected !== 'undefined';
 
       if (this.hasConnectFeature) {
-        this.device.onconnect = this.onConnect.bind(this);
+        if (DeviceComponent.isBluetoothDevice(this.deviceInfo)) {
+          this.device.onconnect = this.onConnect.bind(this);
+        }
+        if (DeviceComponent.isUsbSerialDevice(this.deviceInfo)) {
+          (navigator as any).serial.addEventListener('connect', this.onConnectUsbSerialDevice.bind(this));
+        }
         this.device.ondisconnect = this.onDisconnect.bind(this);
         this.isConnected = this.device.connected;
       }
@@ -69,6 +74,18 @@ export class DeviceComponent implements OnInit {
   }
 
   onConnect() {
+    console.log(`[DEBUG] device(${this.deviceName()}) connect`);
+    this.updateConnectState();
+  }
+
+  onConnectUsbSerialDevice(e: any) {
+    let port = e.target;
+    let port_info = port.getInfo();
+    if (JSON.stringify(port_info) != JSON.stringify(this.deviceInfo)) {
+      return;
+    }
+    this.device = port;
+    this.device.ondisconnect = this.onDisconnect.bind(this);
     console.log(`[DEBUG] device(${this.deviceName()}) connect`);
     this.updateConnectState();
   }
