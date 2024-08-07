@@ -45,6 +45,7 @@ export class DeviceComponent implements OnInit {
     // For testing purpose
     const allowed_uuids = [
       '25e97ff7-24ce-4c4c-8951-f764a708f7b5',  // Pixel Bud Pro
+      '3a046f6d-24d2-7655-6534-0d7ecb759709',  // Pixel Bud Series A
     ];
     return info.bluetoothServiceClassId !== undefined &&
         allowed_uuids.includes(info.bluetoothServiceClassId);
