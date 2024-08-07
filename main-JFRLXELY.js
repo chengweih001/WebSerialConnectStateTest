@@ -33926,8 +33926,10 @@ var _DeviceComponent = class _DeviceComponent {
   }
   static isBluetoothDevice(info) {
     const allowed_uuids = [
-      "25e97ff7-24ce-4c4c-8951-f764a708f7b5"
+      "25e97ff7-24ce-4c4c-8951-f764a708f7b5",
       // Pixel Bud Pro
+      "3a046f6d-24d2-7655-6534-0d7ecb759709"
+      // Pixel Bud Series A
     ];
     return info.bluetoothServiceClassId !== void 0 && allowed_uuids.includes(info.bluetoothServiceClassId);
   }
@@ -34095,4 +34097,4 @@ var AppComponent = _AppComponent;
 
 // src/main.ts
 bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));
-//# sourceMappingURL=main-HSPONON7.js.map
+//# sourceMappingURL=main-JFRLXELY.js.map
